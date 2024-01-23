@@ -11,3 +11,10 @@ class Command(BaseCommand):
             city = "Łódź",
             address = "Marmurowa 4",
         )
+
+        Source.objects.create(
+            url = "ciapkowo.pl",
+            full_name = "Schronisko dla Bezdomnych Zwierząt w Gdyni",
+            city = "Gdynia",
+            address = "Małokacka 3A",
+        )

@@ -5,6 +5,10 @@ from listings.models import Listing, Source
 def add_data() -> int:
 
     from . import _scrp_schronisko_lodz_pl
+    from . import _scrp_ciapkowo_pl
+
+    _scrp_ciapkowo_pl.scrape_ciapkowo_pl()
+    
     allData = []
     allData.append(_scrp_schronisko_lodz_pl.scrape_schronisko_lodz_pl())
     added = 0

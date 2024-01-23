@@ -1,14 +1,7 @@
-from bs4 import BeautifulSoup
-from urllib.request import Request, urlopen
-
-def get_page_contents(link: str):
-    req = Request(link)
-
-    html_page = urlopen(req).read()
-    return BeautifulSoup(html_page, 'html.parser')
+from . import _shared as p
 
 def scrape_schronisko_lodz_pl() -> list:
-    soup = get_page_contents('https://schronisko-lodz.pl/?p=adopcje&a=search&type=kot')
+    soup = p.get_page_contents('https://schronisko-lodz.pl/?p=adopcje&a=search&type=kot')
     pages_number_raw = soup.find('div', style='width: 100%; border-style: solid; border-width: 0px; clear: both;').text
 
     #print(pages_number_raw)
@@ -23,7 +16,7 @@ def scrape_schronisko_lodz_pl() -> list:
 
     for page_num in range(number_of_pages):
         if page_num != 0:
-            soup = get_page_contents(f"https://schronisko-lodz.pl/?p=adopcje&a=search&type=kot&page={page_num+1}")
+            soup = p.get_page_contents(f"https://schronisko-lodz.pl/?p=adopcje&a=search&type=kot&page={page_num+1}")
             catboxes = soup.find_all('div', class_ = 'animal_box')
         for i, box in enumerate(catboxes):
             name = box.find("span", style="font-size: 18px; font-weight: bold;").text
