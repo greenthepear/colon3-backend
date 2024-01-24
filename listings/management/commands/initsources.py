@@ -23,6 +23,12 @@ class Command(BaseCommand):
                 full_name = "Schronisko dla Bezdomnych Zwierząt Na Paluchu",
                 city = "Warszawa",
                 address = "Paluch 2",
+            ),
+            Source(
+                url = "schronisko-zwierzaki.lublin.pl",
+                full_name = "Schronisko dla bezdomnych zwierząt w Lublinie",
+                city = "Lublin",
+                address = "Metalurgiczna 5",
             )]
         
         for s in sources:

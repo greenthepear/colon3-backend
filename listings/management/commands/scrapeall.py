@@ -7,13 +7,17 @@ def add_data() -> int:
     from . import _scrp_schronisko_lodz_pl
     from . import _scrp_ciapkowo_pl
     from . import _scrp_napaluchu_waw_pl
+    from . import _scrp_schronisko_zwierzaki_lublin_pl
 
     scrapers = [{"name":"schronisko-lodz.pl",
                  "func":_scrp_schronisko_lodz_pl.scrape_schronisko_lodz_pl},
                 {"name":"ciapkowo.pl",
                  "func":_scrp_ciapkowo_pl.scrape_ciapkowo_pl},
                 {"name":"napaluchu.waw.pl",
-                 "func":_scrp_napaluchu_waw_pl.scrape_napaluchu_waw_pl}]
+                 "func":_scrp_napaluchu_waw_pl.scrape_napaluchu_waw_pl},
+                {"name":"schronisko-zwierzaki.lublin.pl",
+                 "func":_scrp_schronisko_zwierzaki_lublin_pl.scrape_schronisko_zwierzaki_lublin_pl},
+                 ]
     
     allData = []
     for scrp in scrapers:
@@ -25,34 +29,33 @@ def add_data() -> int:
             print(f"Exception while scraping {scrp['name']}: {e}\nskipping...")
             continue
         
-    print(f"Found {len(tempData)} listings.")
-    allData.append(tempData)
-
-        
+        print(f"Found {len(tempData)} listings.")
+        allData.extend(tempData)
+   
     added = 0
-    for item in allData:
-        for cat_dict in item:
-            if Listing.objects.filter(listing_url=cat_dict["listing_url"]).count() == 0:
-                
-                src = Source.objects.filter(url=cat_dict["source"]).first()
-                if src == None:
-                    print("Listing trying to add nonexistent source: ",cat_dict["source"])
-                    continue
+    for cat_dict in allData:
+        if Listing.objects.filter(listing_url=cat_dict["listing_url"]).count() != 0:
+            continue
+            
+        src = Source.objects.filter(url=cat_dict["source"]).first()
+        if src == None:
+            print("Listing trying to add nonexistent source: ",cat_dict["source"])
+            continue
 
-                l = Listing(
-                    listing_url = cat_dict["listing_url"],
-                    cat_name = cat_dict["cat_name"],
-                    source = src,
-                    image_url = cat_dict["image_url"],
-                    cat_age = cat_dict["cat_age"],
-                    cat_sex = cat_dict["cat_sex"],
-                    added_date = timezone.now(),
-                )
+        l = Listing(
+            listing_url = cat_dict["listing_url"],
+            cat_name = cat_dict["cat_name"],
+            source = src,
+            image_url = cat_dict["image_url"],
+            cat_age = cat_dict["cat_age"],
+            cat_sex = cat_dict["cat_sex"],
+            added_date = timezone.now(),
+        )
 
-                print(f"Adding: {l.cat_name} - {l.listing_url}")
-                l.save()
+        print(f"Adding: {l.cat_name} - {l.listing_url}")
+        l.save()
 
-                added += 1
+        added += 1
 
     return added
 

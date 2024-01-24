@@ -15,7 +15,7 @@ class Listing(models.Model):
     listing_url = models.CharField(max_length=511)
     cat_name = models.CharField(max_length=127)
     source = models.ForeignKey(Source, on_delete=models.CASCADE)
-    image_url = models.CharField(max_length=127)
+    image_url = models.CharField(max_length=255)
     cat_age = models.IntegerField()
     cat_sex = models.CharField(max_length=5)
     added_date = models.DateTimeField(max_length=200)
