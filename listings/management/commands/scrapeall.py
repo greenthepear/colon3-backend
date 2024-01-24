@@ -16,8 +16,7 @@ def add_data() -> int:
                 {"name":"napaluchu.waw.pl",
                  "func":_scrp_napaluchu_waw_pl.scrape_napaluchu_waw_pl},
                 {"name":"schronisko-zwierzaki.lublin.pl",
-                 "func":_scrp_schronisko_zwierzaki_lublin_pl.scrape_schronisko_zwierzaki_lublin_pl},
-                 ]
+                 "func":_scrp_schronisko_zwierzaki_lublin_pl.scrape_schronisko_zwierzaki_lublin_pl}]
     
     allData = []
     for scrp in scrapers:
@@ -60,7 +59,7 @@ def add_data() -> int:
     return added
 
 class Command(BaseCommand):
-    help = "Adds all scraped data to database"
+    help = "Scrapes all the shelters and adds data to database"
         
     def handle(self, *args, **options):
         added = add_data()
