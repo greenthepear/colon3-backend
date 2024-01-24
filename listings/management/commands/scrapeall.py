@@ -6,20 +6,34 @@ def add_data() -> int:
 
     from . import _scrp_schronisko_lodz_pl
     from . import _scrp_ciapkowo_pl
+    from . import _scrp_napaluchu_waw_pl
 
-    #_scrp_ciapkowo_pl.scrape_ciapkowo_pl()
+    scrapers = [{"name":"schronisko-lodz.pl",
+                 "func":_scrp_schronisko_lodz_pl.scrape_schronisko_lodz_pl},
+                {"name":"ciapkowo.pl",
+                 "func":_scrp_ciapkowo_pl.scrape_ciapkowo_pl},
+                {"name":"napaluchu.waw.pl",
+                 "func":_scrp_napaluchu_waw_pl.scrape_napaluchu_waw_pl}]
     
     allData = []
-    allData.append(_scrp_schronisko_lodz_pl.scrape_schronisko_lodz_pl())
-    allData.append(_scrp_ciapkowo_pl.scrape_ciapkowo_pl())
+    for scrp in scrapers:
+        print(f"Scraping {scrp['name']}...")
+        tempData = []
+        try:
+            tempData = scrp['func']()
+        except Exception as e:
+            print(f"Exception while scraping {scrp['name']}: {e}\nskipping...")
+            continue
+        
+    print(f"Found {len(tempData)} listings.")
+    allData.append(tempData)
+
+        
     added = 0
     for item in allData:
         for cat_dict in item:
             if Listing.objects.filter(listing_url=cat_dict["listing_url"]).count() == 0:
-                #cat_dict["added_date"] = timezone.now()
-                #cat_dict["source"] = Source.objects.filter(url=cat_dict["source"])
                 
-                #Listing.objects.create(**cat_dict)
                 src = Source.objects.filter(url=cat_dict["source"]).first()
                 if src == None:
                     print("Listing trying to add nonexistent source: ",cat_dict["source"])

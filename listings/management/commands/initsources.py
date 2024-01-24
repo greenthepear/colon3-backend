@@ -14,9 +14,15 @@ class Command(BaseCommand):
             ),
             Source(
                 url = "ciapkowo.pl",
-                full_name = "Schronisko dla Bezdomnych Zwierząt w Gdyni",
+                full_name = "\"Ciapkowo\" Schronisko dla Bezdomnych Zwierząt w Gdyni",
                 city = "Gdynia",
                 address = "Małokacka 3A",
+            ),
+            Source(
+                url = "napaluchu.waw.pl",
+                full_name = "Schronisko dla Bezdomnych Zwierząt Na Paluchu",
+                city = "Warszawa",
+                address = "Paluch 2",
             )]
         
         for s in sources:
