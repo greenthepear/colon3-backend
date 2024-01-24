@@ -1,15 +1,15 @@
 from rest_framework import serializers
-from .models import Song, Artist
+from .models import Listing, Source
 
 
-class SongSerializer(serializers.ModelSerializer):
+class SourceSerializer(serializers.ModelSerializer):
     class Meta:
-      model = Song
-      fields = ('id', 'name')
+        model = Source
+        fields = '__all__'
       
-class ArtistSerializer(serialisers.ModelSerializer):
-  songs = SongSerializer(many=True)
-   
-  class Meta:
-    model = Artist
-    fields = ('id', 'name', 'songs')
+class FullCatSerializer(serializers.ModelSerializer):
+    source = SourceSerializer(many=False)
+    
+    class Meta:
+        model = Listing
+        fields = '__all__'
