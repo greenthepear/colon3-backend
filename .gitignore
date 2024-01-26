@@ -1,4 +1,6 @@
-# Created by https://www.gitignore.io
+_secret.py
+
+# Rest created by https://www.gitignore.io
 
 ### OSX ###
 .DS_Store
