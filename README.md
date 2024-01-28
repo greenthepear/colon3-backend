@@ -11,10 +11,12 @@
 
 - Schronisko dla bezdomnych zwierząt w Lublinie: **[schronisko-zwierzaki.lublin.pl](http://schronisko-zwierzaki.lublin.pl)**
 
+It also features a simple API that returns JSON.
+
 # Running
 
 1. With `pip` install the following dependencies: `Django`, `djangorestframework`, `BeautifulSoup4`, `mysqlclient`
-2. Create a file in the repository root called `_secret.py` and define the following variables depending on your database, for example:
+2. Create a file in `./colon3/` called `_secret.py` and define the following variables depending on your database, for example:
 
         #Can be generated with:
         #from django.core.management.utils import get_random_secret_key
